@@ -1,10 +1,30 @@
+import React, { ReactElement, ReactNode } from "react";
+
 type Partial<T> = {
     [P in keyof T]?: T[P];
   };
 
+export interface Base {
+    id?: string
+    children?: ReactNode
+}
+
+export interface PathChildren {
+    id?: string
+    children: ReactElement | ReactElement[]
+}
+
+export interface Relative {
+    rel?: boolean
+}
+
 export interface Point {
     x: number
     y: number
+}
+
+export interface Rel {
+    rel: boolean
 }
 
 export interface Point1 {

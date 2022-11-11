@@ -1,39 +1,43 @@
 import React, { Children, FC, ReactElement, ReactNode } from "react";
-import { Point, PointDelta } from "./lib/types";
+import { Base, PathChildren, Point, Relative } from "./lib/types";
 
-type ReactStringable = ReactNode & ReactElement
+type ReactStringable = ReactNode & ReactElement;
 
-export const Path = (props) => {
-  const { children, ...p } = props;
-  const d = Children.map(children, (child) => child.type(child.props)).join("");
+const relPrefix = (rel: boolean, prefix: string) =>
+  rel ? prefix.toLowerCase() : prefix.toUpperCase();
+
+export const Path: FC<PathChildren> = (props) => {
+  const { children = [], ...p } = props;
+  const d = Children.map(children, (child) => {
+    //@ts-ignore
+    return child.type(child.props);
+  }).join("");
   const autoClose = d[-1] !== "z";
   return <path {...p} d={autoClose ? `${d}z` : d} />;
 };
 
-export const Move : FC<Partial<Point>> = ({ x = 0 , y = 0 }) => {
-  return `M ${x} ${y}` as ReactStringable
+export const Move: FC<Partial<Point> & Relative> = ({
+  x = 0,
+  y = 0,
+  rel = false,
+}) => {
+  return `${relPrefix(rel, "M")} ${x} ${y}` as ReactStringable;
 };
 
-export const RelMove : FC<PointDelta> = ({ dx, dy }) => {
-  return `m ${dx} ${dy}` as ReactStringable;
+export const Line: FC<Partial<Point> & Relative> = ({
+  x = 0,
+  y = 0,
+  rel = false,
+}) => {
+  return `$${relPrefix(rel, "L")} ${x} ${y}` as ReactStringable;
 };
 
-//TODO: split these into relative components as well
-export const Line : FC<Partial<Point> & Partial<PointDelta>> = ({ x, y, dx, dy }) => {
-  if (x != null && y != null) {
-    return `L ${x} ${y}` as ReactStringable;
-  } else if (dx != null && dy != null) {
-    return `l ${dx} ${dy}` as ReactStringable;
-  } else if (x != null) {
-    return `H ${x}` as ReactStringable;
-  } else if (y != null) {
-    return `V ${y}` as ReactStringable;
-  } else if (dx != null) {
-    return `h ${dx}` as ReactStringable;
-  } else if (dy != null) {
-    return `v ${dy}` as ReactStringable;
-  }
-  throw new Error("Invalid props for Line");
+export const Horizontal: FC<Omit<Point, "y"> & Relative> = ({ x, rel = false}) => {
+  return `${relPrefix(rel, "h")} ${x}` as ReactStringable;
+};
+
+export const Vertical: FC<Omit<Point, "x"> & Relative> = ({y, rel = false}) => {
+  return `${relPrefix(rel, "v")} ${y}` as ReactStringable;
 };
 
 //TODO: split these into relative components as well
