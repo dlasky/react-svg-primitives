@@ -11,10 +11,10 @@ export const Circle: FC<CircleProps> = ({ x, y, radius, pathLength }) => {
 };
 
 interface EllipseProps extends Point {
-    radiusX : number
-    radiusY : number
+  radiusX: number;
+  radiusY: number;
 }
 
-export const Ellipse : FC<EllipseProps> = ({x, y, radiusX, radiusY}) => {
-    return <ellipse cx={x} cy={y} rx={radiusX} ry={radiusY}></ellipse>
+export const Ellipse: FC<EllipseProps> = ({ x, y, radiusX, radiusY }) => {
+  return <ellipse cx={x} cy={y} rx={radiusX} ry={radiusY}></ellipse>;
 };

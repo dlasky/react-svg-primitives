@@ -32,11 +32,17 @@ export const Line: FC<Partial<Point> & Relative> = ({
   return `${relPrefix(rel, "L")} ${x} ${y}` as ReactStringable;
 };
 
-export const Horizontal: FC<Omit<Point, "y"> & Relative> = ({ x, rel = false}) => {
+export const Horizontal: FC<Omit<Point, "y"> & Relative> = ({
+  x,
+  rel = false,
+}) => {
   return `${relPrefix(rel, "h")} ${x}` as ReactStringable;
 };
 
-export const Vertical: FC<Omit<Point, "x"> & Relative> = ({y, rel = false}) => {
+export const Vertical: FC<Omit<Point, "x"> & Relative> = ({
+  y,
+  rel = false,
+}) => {
   return `${relPrefix(rel, "v")} ${y}` as ReactStringable;
 };
 

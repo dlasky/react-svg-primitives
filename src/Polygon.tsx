@@ -1,5 +1,5 @@
-import React from 'react'
+import React from "react";
 
-const Polygon = ({props}) => {
-    <polygon></polygon>
-}
+const Polygon = ({ props }) => {
+  <polygon></polygon>;
+};

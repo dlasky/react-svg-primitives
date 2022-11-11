@@ -1,5 +1,3 @@
 describe("Path", () => {
-    it("should move", () => {
-        
-    })
-})
+  it("should move", () => {});
+});
