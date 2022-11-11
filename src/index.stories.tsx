@@ -1,6 +1,6 @@
 import React from 'react'
 import { Circle, Ellipse } from './Circle'
-import { Line, MoveTo, Path } from './Path'
+import { Line, Path } from './Path'
 import { SVG } from './SVG'
 
 export const Example = () => {
