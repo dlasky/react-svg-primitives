@@ -1,2 +1,5 @@
 import React from 'react'
-const Polygon = () => {}
+
+const Polygon = ({props}) => {
+    <polygon></polygon>
+}

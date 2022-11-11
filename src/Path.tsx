@@ -29,7 +29,7 @@ export const Line: FC<Partial<Point> & Relative> = ({
   y = 0,
   rel = false,
 }) => {
-  return `$${relPrefix(rel, "L")} ${x} ${y}` as ReactStringable;
+  return `${relPrefix(rel, "L")} ${x} ${y}` as ReactStringable;
 };
 
 export const Horizontal: FC<Omit<Point, "y"> & Relative> = ({ x, rel = false}) => {

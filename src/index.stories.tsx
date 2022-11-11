@@ -9,7 +9,7 @@ export const Example = () => {
         <Ellipse x={40} y={40} radiusX={10} radiusY={5}/>
         <Path>
             <Move/>
-            <Line x={10} y={0}/>
+            <Line x={10} y={0}/> 
             <Line x={10} y={10}/>
             <Line x={0} y={10}/>
         </Path>

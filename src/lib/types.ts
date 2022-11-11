@@ -23,6 +23,17 @@ export interface Point {
     y: number
 }
 
+export interface Size {
+    width: number
+    height: number
+}
+
+export interface Radius {
+    radius?: number
+    radiusX?: number
+    radiusY?: number
+}
+
 export interface Rel {
     rel: boolean
 }

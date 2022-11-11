@@ -1,2 +1,4 @@
 import React from 'react'
-const Polyline = () => {}
+const Polyline = () => {
+    <polyline></polyline>
+}
