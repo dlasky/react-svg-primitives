@@ -3,7 +3,7 @@ import {Point,Base} from "./lib/types"
 
 
 type Points = Point[] | string
-interface PolygonProps extends Base{
+interface PolyProps extends Base{
   points: Points
 }
 
@@ -11,7 +11,7 @@ const isPoints = (input : Points) => {
   return typeof input !== "string"
 }
 
-const Polygon : FC<PolygonProps> = ({ points, ...base}) => {
+export const Polygon : FC<PolyProps> = ({ points, ...base}) => {
   let pts = points as string
   if (isPoints(points)) {
     pts = (points as Point[]).map(p=>`${p.x},${p.y}`).join(" ")
@@ -19,4 +19,10 @@ const Polygon : FC<PolygonProps> = ({ points, ...base}) => {
   return <polygon {...base} points={pts}></polygon>;
 };
 
-export default Polygon
+export const Polyline : FC<PolyProps> = ({ points, ...base}) => {
+  let pts = points as string
+  if (isPoints(points)) {
+    pts = (points as Point[]).map(p=>`${p.x},${p.y}`).join(" ")
+  }
+  return <polyline {...base} points={pts}></polyline>;
+};
