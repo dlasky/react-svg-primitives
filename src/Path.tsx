@@ -1,5 +1,12 @@
 import React, { Children, FC, ReactElement, ReactNode } from "react";
-import { Base, PathChildren, Point, Relative } from "./lib/types";
+import {
+  Base,
+  PathChildren,
+  Point,
+  Point1,
+  Point2,
+  Relative,
+} from "./lib/types";
 
 type ReactStringable = ReactNode & ReactElement;
 
@@ -46,46 +53,41 @@ export const Vertical: FC<Omit<Point, "x"> & Relative> = ({
   return `${relPrefix(rel, "v")} ${y}` as ReactStringable;
 };
 
-//TODO: split these into relative components as well
-export const Cubic = ({ x1, y1, x2, y2, x, y, dx1, dy1, dx2, dy2, dx, dy }) => {
-  if (
-    x1 != null &&
-    y1 != null &&
-    x2 != null &&
-    y2 != null &&
-    x != null &&
-    y != null
-  ) {
-    return `C ${x1} ${y1}, ${x2} ${y2}, ${x} ${y}`;
-  } else if (
-    dx1 != null &&
-    dy1 != null &&
-    dx2 != null &&
-    dy2 != null &&
-    dx != null &&
-    dy != null
-  ) {
-    return `c ${dx1} ${dy1}, ${dx2} ${dy2}, ${dx} ${dy}`;
-  } else if (x2 != null && y2 != null && x != null && y != null) {
-    return `S ${x2} ${y2}, ${x} ${y}`;
-  } else if (dx2 != null && dy2 != null && dx != null && dy != null) {
-    return `s ${dx2} ${dy2}, ${dx} ${dy}`;
-  }
-  throw new Error("Invalid props for Cubic");
+export const Cubic: FC<
+  Partial<Point2> & Partial<Point1> & Partial<Point> & Relative
+> = ({ x1 = 0, y1 = 0, x2 = 0, y2 = 0, x = 0, y = 0, rel = false }) => {
+  return `${relPrefix(
+    rel,
+    "c"
+  )} ${x1} ${y1}, ${x2} ${y2}, ${x} ${y}` as ReactStringable;
 };
 
-//TODO: split these into relative components as well
-export const Quadratic = ({ x1, y1, x, y, dx1, dy1, dx, dy }) => {
-  if (x1 != null && y1 != null && x != null && y != null) {
-    return `Q ${x1} ${y1}, ${x} ${y}`;
-  } else if (dx1 != null && dy1 != null && dx != null && dy != null) {
-    return `q ${dx1} ${dy1}, ${dx} ${dy}`;
-  } else if (x != null && y != null) {
-    return `T ${x} ${y}`;
-  } else if (dx != null && dy != null) {
-    return `t ${dx} ${dy}`;
-  }
-  throw new Error("Invalid props for Quadratic");
+export const SimpleCubic: FC<Partial<Point> & Partial<Point2> & Relative> = ({
+  x = 0,
+  y = 0,
+  x2 = 0,
+  y2 = 0,
+  rel = false,
+}) => {
+  return `${relPrefix(rel, "s")} ${x2} ${y2}, ${x} ${y}` as ReactStringable;
+};
+
+export const Quadratic: FC<Partial<Point1> & Partial<Point> & Relative> = ({
+  x1 = 0,
+  y1 = 0,
+  x = 0,
+  y = 0,
+  rel = false,
+}) => {
+  return `${relPrefix(rel, "q")} ${x1} ${y1}, ${x} ${y}` as ReactStringable;
+};
+
+export const SimpleQuadratic: FC<Partial<Point> & Relative> = ({
+  x = 0,
+  y = 0,
+  rel = false,
+}) => {
+  return `${relPrefix(rel, "t")} ${x} ${y}` as ReactStringable;
 };
 
 //TODO: split these into relative components as well
