@@ -5,8 +5,10 @@ import {
   Point,
   Point1,
   Point2,
+  Radius,
   Relative,
 } from "./lib/types";
+import { getRadius } from "./lib/radius";
 
 type ReactStringable = ReactNode & ReactElement;
 
@@ -90,28 +92,30 @@ export const SimpleQuadratic: FC<Partial<Point> & Relative> = ({
   return `${relPrefix(rel, "t")} ${x} ${y}` as ReactStringable;
 };
 
-//TODO: split these into relative components as well
-export const Arc = ({
-  rx,
-  ry,
+interface Arc {
+  largeArc: boolean;
+  sweep: boolean;
+  rotation: number;
+}
+
+export const Arc: FC<
+  Partial<Arc> & Partial<Radius> & Partial<Point> & Relative
+> = ({
+  radius,
+  radiusX,
+  radiusY,
   rotation = 0,
-  largeArc,
-  sweep,
-  x,
-  y,
-  dx,
-  dy,
+  largeArc = false,
+  sweep = false,
+  x = 0,
+  y = 0,
+  rel = false,
 }) => {
-  if (rx != null && ry != null && x != null && y != null) {
-    return `A ${rx} ${ry} ${rotation} ${largeArc ? "1" : "0"} ${
-      sweep ? "1" : "0"
-    } ${x} ${y}`;
-  } else if (rx != null && ry != null && dx != null && dy != null) {
-    return `a ${rx} ${ry} ${rotation} ${largeArc ? "1" : "0"} ${
-      sweep ? "1" : "0"
-    } ${dx} ${dy}`;
-  }
-  throw new Error("Invalid props for Arc");
+  const { rx, ry } = getRadius({ radius, radiusX, radiusY });
+
+  return `${relPrefix(rel, "a")} ${rx} ${ry} ${rotation} ${
+    largeArc ? "1" : "0"
+  } ${sweep ? "1" : "0"} ${x} ${y}` as ReactStringable;
 };
 
 export const Close = () => "z";
