@@ -18,10 +18,11 @@ const relPrefix = (rel: boolean, prefix: string) =>
 export const Path: FC<PathChildren> = (props) => {
   const { children = [], ...p } = props;
   const d = Children.map(children, (child) => {
-    //@ts-ignore
-    return child.type(child.props);
+    const element = child as ReactElement;
+    const Component = element.type as (props: any) => string;
+    return Component(element.props);
   }).join("");
-  const autoClose = d[-1] !== "z";
+  const autoClose = d[d.length - 1] !== "z";
   return <path {...p} d={autoClose ? `${d}z` : d} />;
 };
 
